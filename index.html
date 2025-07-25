@@ -1,0 +1,475 @@
+html_start = """<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Checklist + Story Mode FULL</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f8fa;
+  padding: 20px;
+}
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.bars {
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+.bar{
+  flex:1;
+  background:#ddd;
+  border-radius:6px;
+  overflow:hidden;
+  position:relative;
+  height:20px;
+}
+.bar span{
+  position:absolute;
+  left:8px;
+  top:0;
+  font-size:12px;
+  color:#000;
+  line-height:20px;
+  z-index:2;
+}
+.bar .fill{
+  height:100%;
+  width:50%;
+  transition:width 0.3s;
+}
+#energyBar{background:#FFD700;}
+#moodBar{background:#4DB6E2;}
+#auraBar{background:#B388EB;}
+label.checked{background:#e0ffe0;color:#006400;text-decoration:line-through;}
+.snippet{margin-top:15px;font-style:italic;color:#555;min-height:20px;transition:opacity 0.4s;opacity:1;}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,0.4);}
+.modal.hidden{display:none;}
+.modal-content{background:#fff;padding:20px;border-radius:8px;text-align:center;max-width:300px;}
+.modal .icon{font-size:32px;margin-bottom:10px;}
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Checklist Story Mode FULL</h2>
+  <div class="bars">
+    <div class="bar"><span>Energy ⚡</span><div class="fill" id="energyBar"></div></div>
+    <div class="bar"><span>Mood 😊</span><div class="fill" id="moodBar"></div></div>
+    <div class="bar"><span>Aura ✨</span><div class="fill" id="auraBar"></div></div>
+  </div>
+  <label>Nhóm:
+    <select id="category">
+      <option value="">-- Chọn nhóm --</option>
+      <option value="chamCoThe">1. 🏋️ Chăm Cơ Thể</option>
+      <option value="chamNhaCua">2. 🏠 Chăm Nhà Cửa</option>
+      <option value="dinhDuong">3. 🍎 Dinh Dưỡng – Ẩm Thực</option>
+      <option value="langPhi">4. 💰 Kiểm Soát Lãng Phí</option>
+      <option value="aura">5. ✨ Nâng Tầng Aura</option>
+      <option value="soThich">6. 🎭 Sở Thích – Dưỡng Khí</option>
+      <option value="theDuc">7. 🏃 Thể Dục – Cơ Xương – Dáng Form</option>
+    </select>
+  </label>
+  <div id="checklist"></div>
+  <div id="snippet" class="snippet"></div>
+  <div id="milestoneModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="icon">🎉</div>
+      <p id="milestoneText"></p>
+      <button id="closeModal">Đóng</button>
+    </div>
+  </div>
+</div>
+<script>
+"""
+print(html_start[:1500])
+
+
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Checklist + Story Mode FULL</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f8fa;
+  padding: 20px;
+}
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.bars {
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+.bar{
+  flex:1;
+  background:#ddd;
+  border-radius:6px;
+  overflow:hidden;
+  position:relative;
+  height:20px;
+}
+.bar span{
+  position:absolute;
+  left:8px;
+  top:0;
+  font-size:12px;
+  color:#000;
+  line-height:20px;
+  z-index:2;
+}
+.bar .fill{
+  height:100%;
+  width:50%;
+  transition:width 0.3s;
+}
+#energyBar{background:#FFD700;}
+#moodBar{background:#4DB6E2;}
+#auraBar{background:#B388EB;}
+label.checked{background:#e0ffe0;color:#006400;text-decoration:line-through;}
+.snippet{margin-top:15px;font-style:italic;color:#555;min-height:20px;transition:opacity 0.4s;opacity:1;}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,0.4);}
+.modal.hidden{display:none;}
+.modal-content{background:#fff;padding:20px;border-radius:8px;text-align:center;max-width:300px;}
+.modal .icon{font-size:32px;margin-bottom:10px;}
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Checklist Story Mode FULL</h2>
+  <div class="bars">
+    <div class="bar"><span>Energy ⚡</span><div class="fill" id="energyBar"></div></div>
+    
+
+
+
+<script>
+// ================= CHECKLIST DATA ===================
+const checklistData = {
+  chamCoThe: [
+    "Uống đủ 1.5 – 2L nước (chia 3 khung sáng – chiều – tối)",
+    "Rửa mặt sáng + tối",
+    "Thoa lotion body (cổ – vai – tay – chân)",
+    "Chải tóc – xịt dưỡng ẩm ngọn tóc (nếu tóc khô)",
+    "Đánh răng 2 lần/ngày",
+    "Tẩy trang / lau sạch mặt nếu dùng kem chống nắng hoặc đi ra ngoài",
+    "Làm sạch môi – dưỡng môi",
+    "Tắm nước ấm buổi tối (xả stress, reset da)",
+    "Dưỡng da body tối (nếu không mệt)",
+    "Kéo giãn chân, gập bụng nhẹ 3–5 phút (nếu ngồi lâu)"
+  ],
+  chamNhaCua: [
+    "Xếp chăn gọn sau khi ngủ dậy",
+    "Rửa chén bát trong ngày (không để tồn qua đêm)",
+    "Quét nhà hoặc lau chùi điểm bẩn rõ rệt",
+    "Không để đồ lung tung dưới đất",
+    "Dọn đồ trên bàn về đúng góc / vị trí",
+    "Đổ rác (tối)"
+  ],
+  dinhDuong: [
+    "1 cốc nước lọc ngay sau khi ngủ dậy",
+    "Uống nước 1.5–2L chia sáng/chiều/tối",
+    "2–3 bữa chính: đầy đủ carb tốt + đạm + rau",
+    "1–2 bữa phụ nhẹ: sữa hạt / trái cây / hạt mix",
+    "1 bữa có rau xanh dạng lá (giúp tiêu hóa)",
+    "1–2 bữa có trái cây tươi",
+    "1 bữa có protein trắng (cá, gà, trứng)",
+    "Tránh để quá 6 tiếng không ăn",
+    "Không ăn khuya sau 9h tối (trừ khi tập nặng)"
+  ],
+  langPhi: [
+    "Hôm nay có bị rớt mode / tụt khí không? (Nếu có, tự xử chưa?)",
+    "Có để bản thân trì hoãn 2 tiếng liên tiếp không lý do?",
+    "Mạng xã hội / Tiktok hôm nay có tràn quá 30 phút không?",
+    "Có ngồi lướt kiểu vô thức quá 3 lần / ngày không?",
+    "Có bị kéo vào nhóm chat / bạn bè không thuộc vòng chiến lược?",
+    "Có để bản thân làm việc khi đã mệt / cạn pin không? (Nếu có, có nghỉ hồi pin chưa?)",
+    "Có ăn uống đúng khung để giữ nền năng lượng chưa?",
+    "Có bị cuốn vào những việc không có giá trị lâu dài? (Ví dụ: drama, thị phi, chuyện vô ích)",
+    "Có tiêu hao thời gian vì dọn dẹp / sắp xếp không dứt điểm?"
+  ],
+  aura: [
+    "Thở sâu, vươn người — mở lồng ngực 3–5 phút",
+    "Dành 10–15 phút ở một mình — không mạng, không nói",
+    "Dưỡng da cổ + vai (song song với dưỡng da mặt)",
+    "Ý thức: giữ mặt thả mềm, không cau — môi nhẹ tự nhiên",
+    "Nhìn gương 2 phút/ngày: mắt tỉnh — không gồng",
+    "Giọng nói: giữ đều, mềm, không cộc",
+    "Ăn uống chậm rãi — không nuốt vội",
+    "Nghe nhạc tầng cao (nhạc chill – nhạc nền Fantasy – Nature Sound)"
+  ],
+  soThich: [
+    "Xem múa cổ trang hoặc múa võ (10–30’)",
+    "Nghe nhạc cụ / sáo / đàn (10–40’)",
+    "Thưởng mùi thơm tự nhiên (tinh dầu / hoa / rượu trái cây)",
+    "Ngắm 1 hình mỹ nhân khí mềm hoặc khí tỉnh (5–10’)",
+    "Vẽ tranh / mặc đẹp / ngồi tĩnh giữa không gian đẹp (15–30’)",
+    "Uống nước ép / rượu trái cây (100–200ml)",
+    "Luyện giọng ấm (5–10 phút, buổi sáng hoặc tối)",
+    "Đọc truyện / bài phân tích sâu (30–60’)",
+    "Thu thập 1–3 mẫu / content mới để nạp pattern (15–30’)",
+    "Nghe / đọc tài chính – dòng tiền (15–45’)",
+    "Làm 1 lần “data hóa” – sơ đồ – hệ hóa 1 chủ đề đang học (tối đa 45’)",
+    "Quan sát 1 nhân vật / case người trong ngày → phân tích khí tầng",
+    "Vận động nhẹ / bơi / đi bộ / vươn căng 10–20 phút",
+    "Ăn 1 bữa ngon có tỉnh khí",
+    "Uống đủ nước ấm — không uống lạnh sau 21h",
+    "Tránh gió – lạnh – âm khí trực tiếp khi mệt"
+  ],
+  theDuc: [
+    "Kéo giãn nhẹ sau khi ngủ dậy (5 phút)",
+    "Đi bộ hoặc di chuyển cơ thể 15–30 phút (tránh ngồi lì)",
+    "Vươn vai, xoay cổ, gập người 2 lần/ngày (sáng – tối)",
+    "Giữ thẳng cột sống khi ngồi học/làm (ý thức chỉnh)",
+    "Xoa bụng theo chiều kim đồng hồ sau ăn (1 phút)",
+    "Nhẹ nhàng bóp chân – cổ chân trước khi ngủ"
+  ]
+};
+
+// ================ CHECKLIST VALUES (Energy / Mood / Aura) ===================
+const checklistValues = {
+  // ✅ Chăm cơ thể
+  "Uống đủ 1.5 – 2L nước (chia 3 khung sáng – chiều – tối)": {energy:10, mood:0, aura:0},
+  "Rửa mặt sáng + tối": {energy:5, mood:0, aura:5},
+  "Thoa lotion body (cổ – vai – tay – chân)": {energy:0, mood:0, aura:5},
+  "Chải tóc – xịt dưỡng ẩm ngọn tóc (nếu tóc khô)": {energy:0, mood:0, aura:5},
+  "Đánh răng 2 lần/ngày": {energy:5, mood:0, aura:0},
+  "Tẩy trang / lau sạch mặt nếu dùng kem chống nắng hoặc đi ra ngoài": {energy:0, mood:0, aura:5},
+  "Làm sạch môi – dưỡng môi": {energy:0, mood:0, aura:5},
+  "Tắm nước ấm buổi tối (xả stress, reset da)": {energy:10, mood:5, aura:5},
+  "Dưỡng da body tối (nếu không mệt)": {energy:0, mood:0, aura:5},
+  "Kéo giãn chân, gập bụng nhẹ 3–5 phút (nếu ngồi lâu)": {energy:5, mood:5, aura:0},
+  
+  // ✅ Chăm nhà cửa
+  "Xếp chăn gọn sau khi ngủ dậy": {energy:0, mood:0, aura:5},
+  "Rửa chén bát trong ngày (không để tồn qua đêm)": {energy:-5, mood:0, aura:5},
+  "Quét nhà hoặc lau chùi điểm bẩn rõ rệt": {energy:-5, mood:0, aura:10},
+  "Không để đồ lung tung dưới đất": {energy:0, mood:0, aura:5},
+  "Dọn đồ trên bàn về đúng góc / vị trí": {energy:0, mood:0, aura:5},
+  "Đổ rác (tối)": {energy:-5, mood:0, aura:5},
+  
+  // ✅ Dinh dưỡng
+  "1 cốc nước lọc ngay sau khi ngủ dậy": {energy:10, mood:0, aura:0},
+  "Uống nước 1.5–2L chia sáng/chiều/tối": {energy:10, mood:0, aura:0},
+  "2–3 bữa chính: đầy đủ carb tốt + đạm + rau": {energy:10, mood:5, aura:0},
+  "1–2 bữa phụ nhẹ: sữa hạt / trái cây / hạt mix": {energy:5, mood:5, aura:0},
+  "1 bữa có rau xanh dạng lá (giúp tiêu hóa)": {energy:5, mood:0, aura:0},
+  "1–2 bữa có trái cây tươi": {energy:5, mood:5, aura:0},
+  "1 bữa có protein trắng (cá, gà, trứng)": {energy:5, mood:0, aura:0},
+  "Tránh để quá 6 tiếng không ăn": {energy:5, mood:5, aura:0},
+  "Không ăn khuya sau 9h tối (trừ khi tập nặng)": {energy:0, mood:0, aura:5},
+  
+  // ✅ Lãng phí
+  "Hôm nay có bị rớt mode / tụt khí không? (Nếu có, tự xử chưa?)": {energy:0, mood:10, aura:5},
+  "Có để bản thân trì hoãn 2 tiếng liên tiếp không lý do?": {energy:0, mood:10, aura:0},
+  "Mạng xã hội / Tiktok hôm nay có tràn quá 30 phút không?": {energy:0, mood:5, aura:5},
+  "Có ngồi lướt kiểu vô thức quá 3 lần / ngày không?": {energy:0, mood:5, aura:0},
+  "Có bị kéo vào nhóm chat / bạn bè không thuộc vòng chiến lược?": {energy:0, mood:0, aura:5},
+  "Có để bản thân làm việc khi đã mệt / cạn pin không? (Nếu có, có nghỉ hồi pin chưa?)": {energy:10, mood:0, aura:0},
+  "Có ăn uống đúng khung để giữ nền năng lượng chưa?": {energy:5, mood:0, aura:0},
+  "Có bị cuốn vào những việc không có giá trị lâu dài? (Ví dụ: drama, thị phi, chuyện vô ích)": {energy:0, mood:5, aura:5},
+  "Có tiêu hao thời gian vì dọn dẹp / sắp xếp không dứt điểm?": {energy:0, mood:5, aura:0},
+
+  // ✅ Aura
+  "Thở sâu, vươn người — mở lồng ngực 3–5 phút": {energy:5, mood:0, aura:5},
+  "Dành 10–15 phút ở một mình — không mạng, không nói": {energy:0, mood:10, aura:0},
+  "Dưỡng da cổ + vai (song song với dưỡng da mặt)": {energy:0, mood:0, aura:5},
+  "Ý thức: giữ mặt thả mềm, không cau — môi nhẹ tự nhiên": {energy:0, mood:5, aura:10},
+  "Nhìn gương 2 phút/ngày: mắt tỉnh — không gồng": {energy:0, mood:5, aura:5},
+  "Giọng nói: giữ đều, mềm, không cộc": {energy:0, mood:5, aura:10},
+  "Ăn uống chậm rãi — không nuốt vội": {energy:0, mood:5, aura:5},
+  "Nghe nhạc tầng cao (nhạc chill – nhạc nền Fantasy – Nature Sound)": {energy:0, mood:10, aura:0},
+  
+  // ✅ Sở thích
+  "Xem múa cổ trang hoặc múa võ (10–30’)": {energy:0, mood:10, aura:5},
+  "Nghe nhạc cụ / sáo / đàn (10–40’)": {energy:0, mood:10, aura:0},
+  "Thưởng mùi thơm tự nhiên (tinh dầu / hoa / rượu trái cây)": {energy:0, mood:10, aura:5},
+  "Ngắm 1 hình mỹ nhân khí mềm hoặc khí tỉnh (5–10’)": {energy:0, mood:5, aura:10},
+  "Vẽ tranh / mặc đẹp / ngồi tĩnh giữa không gian đẹp (15–30’)": {energy:0, mood:10, aura:10},
+  "Uống nước ép / rượu trái cây (100–200ml)": {energy:0, mood:10, aura:0},
+  "Luyện giọng ấm (5–10 phút, buổi sáng hoặc tối)": {energy:0, mood:5, aura:5},
+  "Đọc truyện / bài phân tích sâu (30–60’)": {energy:0, mood:10, aura:0},
+  "Thu thập 1–3 mẫu / content mới để nạp pattern (15–30’)": {energy:0, mood:10, aura:0},
+  "Nghe / đọc tài chính – dòng tiền (15–45’)": {energy:0, mood:5, aura:5},
+  "Làm 1 lần “data hóa” – sơ đồ – hệ hóa 1 chủ đề đang học (tối đa 45’)": {energy:0, mood:10, aura:5},
+  "Quan sát 1 nhân vật / case người trong ngày → phân tích khí tầng": {energy:0, mood:10, aura:5},
+  "Vận động nhẹ / bơi / đi bộ / vươn căng 10–20 phút": {energy:10, mood:5, aura:0},
+  "Ăn 1 bữa ngon có tỉnh khí": {energy:0, mood:10, aura:0},
+  "Uống đủ nước ấm — không uống lạnh sau 21h": {energy:5, mood:0, aura:5},
+  "Tránh gió – lạnh – âm khí trực tiếp khi mệt": {energy:5, mood:0, aura:5},
+  
+  // ✅ Thể dục
+  "Kéo giãn nhẹ sau khi ngủ dậy (5 phút)": {energy:10, mood:0, aura:0},
+  "Đi bộ hoặc di chuyển cơ thể 15–30 phút (tránh ngồi lì)": {energy:10, mood:5, aura:0},
+  "Vươn vai, xoay cổ, gập người 2 lần/ngày (sáng – tối)": {energy:10, mood:0, aura:0},
+  "Giữ thẳng cột sống khi ngồi học/làm (ý thức chỉnh)": {energy:0, mood:5, aura:5},
+  "Xoa bụng theo chiều kim đồng hồ sau ăn (1 phút)": {energy:0, mood:5, aura:5},
+  "Nhẹ nhàng bóp chân – cổ chân trước khi ngủ": {energy:0, mood:5, aura:5}
+};
+
+// ================ STORY BANK (70 câu) ===================
+const storyBank = [
+  "Một làn khí nhẹ lan ra quanh bạn.",
+  "Bạn thấy cơ thể mình ấm lên một chút.",
+  "Có gì đó tươi mới trong khoảnh khắc này.",
+  "Không gian như thở dễ hơn.",
+  "Cảm giác này nhỏ thôi nhưng thật dễ chịu.",
+  "Một cơn căng nhẹ vừa biến mất.",
+  "Ngày hôm nay bỗng như chậm lại.",
+  "Bạn nghe tiếng thở của mình rõ hơn.",
+  "Cơ thể như gửi lời cảm ơn.",
+  "Sự mệt mỏi lùi đi một chút.",
+  "Giọt nước đầu tiên như làm mới bạn từ trong ra.",
+  "Da bạn mềm hơn khi lotion vừa thấm.",
+  "Mùi xà phòng còn vương nhẹ trong không khí.",
+  "Một cảm giác sạch lan khắp tay.",
+  "Miệng bạn thấy dễ chịu hơn sau khi đánh răng.",
+  "Cơ thể bạn thở phào khi kéo giãn.",
+  "Vị trái cây chua ngọt nhắc bạn rằng bạn vẫn còn sống động.",
+  "Cơ thể như được đổ thêm một ít ánh sáng.",
+  "Mỗi ngụm nước như dập tắt cơn uể oải.",
+  "Mùi lotion nhắc bạn chạm vào bản thân với sự dịu dàng.",
+  "Sàn nhà sáng hơn một chút.",
+  "Không gian sạch hơn, và đầu óc bạn cũng vậy.",
+  "Đồ vật gọn gàng, bạn thấy lòng mình cũng gọn.",
+  "Một góc bừa đã biến mất.",
+  "Ánh sáng chiếu vào phòng khác hẳn.",
+  "Phòng bạn như hít thở.",
+  "Hương thơm nhẹ lan ra sau khi dọn xong.",
+  "Cửa sổ phản chiếu một gương mặt nhẹ hơn.",
+  "Không gian này vừa trở thành nơi trú ngụ.",
+  "Bạn không còn phải tránh ánh nhìn với góc bừa.",
+  "Âm nhạc như trôi qua bạn.",
+  "Một giai điệu lạ vừa chạm tim bạn.",
+  "Bức tranh bạn ngắm không chỉ là hình – nó thở.",
+  "Mùi hương nhẹ làm tâm trí bạn dịu xuống.",
+  "Một đoạn chữ vừa dừng bạn lại giữa trang.",
+  "Tâm trí như được cho ăn.",
+  "Bạn thấy hứng thú với một điều nhỏ.",
+  "Một chi tiết mới đã đi vào trí nhớ.",
+  "Nhịp thở chậm hơn khi tiếng đàn vang lên.",
+  "Bạn nhấp một ngụm rượu trái cây, và mọi thứ dịu xuống."
+];
+
+// ================ MILESTONE BANK ===================
+const milestoneBank = [
+  "Cơ thể này như vừa được reset.",
+  "Căn phòng này giờ thở cùng bạn.",
+  "Ngày hôm nay không còn lãng phí.",
+  "Bạn mang theo một lớp khí tỉnh.",
+  "Một nguồn năng lượng yên tĩnh lan ra.",
+  "Bạn vừa cho tâm trí mình một bữa tiệc.",
+  "Cơ thể bạn nhớ lại cách nó từng chuyển động.",
+  "Một sự an ổn nhỏ đã bám vào ngày này.",
+  "Khí chất bạn mang hôm nay sẽ còn dư âm tới ngày mai.",
+  "Một lớp mệt mỏi dày đã được gỡ bỏ."
+];
+</script>
+
+// ================== JS LOGIC ====================
+const stats = { energy: 50, mood: 50, aura: 50 };
+const groupSelect = document.getElementById('category');
+const checklistDiv = document.getElementById('checklist');
+const snippetDiv = document.getElementById('snippet');
+const modal = document.getElementById('milestoneModal');
+const milestoneText = document.getElementById('milestoneText');
+document.getElementById('closeModal').addEventListener('click',()=>modal.classList.add('hidden'));
+
+// Cập nhật thanh trạng thái
+function updateBars(){
+  document.getElementById('energyBar').style.width = stats.energy + '%';
+  document.getElementById('moodBar').style.width = stats.mood + '%';
+  document.getElementById('auraBar').style.width = stats.aura + '%';
+}
+updateBars();
+
+let currentGroup='';
+let currentValues=[];
+
+// Khi chọn nhóm checklist
+groupSelect.addEventListener('change',()=>{
+  currentGroup=groupSelect.value;
+  loadChecklist();
+});
+
+// Load checklist cho nhóm
+function loadChecklist(){
+  checklistDiv.innerHTML='';
+  snippetDiv.textContent='';
+  if(!currentGroup) return;
+  const items=checklistData[currentGroup];
+  // lấy trạng thái từ localStorage
+  currentValues=JSON.parse(localStorage.getItem('progress_'+currentGroup)||'[]');
+  if(currentValues.length!==items.length) currentValues=items.map(()=>false);
+
+  items.forEach((item,idx)=>{
+    const label=document.createElement('label');
+    const cb=document.createElement('input');
+    cb.type='checkbox';
+    cb.checked=currentValues[idx];
+    if(cb.checked) label.classList.add('checked');
+    cb.addEventListener('change',()=>toggleItem(idx,item,label,cb));
+    label.appendChild(cb); label.append(' '+item);
+    checklistDiv.appendChild(label);
+  });
+}
+
+// Hiệu ứng story
+function fadeSnippet(text){
+  snippetDiv.style.opacity=0;
+  setTimeout(()=>{
+    snippetDiv.textContent=text;
+    snippetDiv.style.opacity=1;
+  },50);
+}
+
+// Toggle khi tick checklist
+function toggleItem(idx,item,label,cb){
+  currentValues[idx]=cb.checked;
+  label.classList.toggle('checked',cb.checked);
+  localStorage.setItem('progress_'+currentGroup, JSON.stringify(currentValues));
+
+  if(cb.checked){
+    // Lấy values cho item
+    const val = checklistValues[item] || {energy:5, mood:5, aura:5};
+    stats.energy = Math.min(100, stats.energy + val.energy);
+    stats.mood = Math.min(100, stats.mood + val.mood);
+    stats.aura = Math.min(100, stats.aura + val.aura);
+    // Random story
+    fadeSnippet(storyBank[Math.floor(Math.random()*storyBank.length)]);
+  } else {
+    // Nếu bỏ tick -> trừ nhẹ
+    const val = checklistValues[item] || {energy:5, mood:5, aura:5};
+    stats.energy=Math.max(0,stats.energy - val.energy);
+    stats.mood=Math.max(0,stats.mood - val.mood);
+    stats.aura=Math.max(0,stats.aura - val.aura);
+  }
+  updateBars();
+  checkMilestone();
+}
+
+// Kiểm tra milestone (hoàn thành nhóm)
+function checkMilestone(){
+  if(currentValues.every(v=>v)){
+    milestoneText.textContent = milestoneBank[Math.floor(Math.random()*milestoneBank.length)];
+    modal.classList.remove('hidden');
+  }
+}
+</script>
+</body>
+</html>
+
