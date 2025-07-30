@@ -1,0 +1,46 @@
+body {
+  margin:0;
+  font-family:'Segoe UI', sans-serif;
+  color:#f1f1f1;
+  background:#101010;
+}
+
+body.mythic-mode {
+  background:linear-gradient(270deg,#2e1a47,#0f0f17,#1b0f2f);
+  background-size:600% 600%;
+  animation:gradientFlow 20s ease infinite;
+}
+
+@keyframes gradientFlow {
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+#toolbar {
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(14px);
+  border-radius:18px;
+  padding:10px;
+  box-shadow:0 0 24px rgba(138,43,226,0.3);
+  display:flex;
+  gap:8px;
+}
+
+button {
+  background:linear-gradient(135deg,#6a5acd,#483d8b);
+  border:1px solid rgba(255,255,255,0.3);
+  border-radius:14px;
+  color:#fff;
+  padding:6px 12px;
+  font-weight:600;
+  transition:all .3s;
+}
+button:hover {
+  box-shadow:0 0 18px rgba(186,85,211,.6);
+  transform:translateY(-1px);
+}
+.overlay header {
+  padding:10px;
+  background:rgba(70,50,100,.7);
+}
