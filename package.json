@@ -1,0 +1,22 @@
+{
+  "name": "FancyZones-Mythic",
+  "version": "1.0.0",
+  "description": "Mythic-level FancyZones Manager",
+  "main": "main.js",
+  "build": {
+    "appId": "com.fancyzones.mythic",
+    "win": { "target": "nsis", "icon": "icons/app.ico" }
+  },
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^29.0.0",
+    "electron-builder": "^24.0.0"
+  },
+  "dependencies": {
+    "ffi-napi": "^5.0.0",
+    "ref-napi": "^4.0.0"
+  }
+}
