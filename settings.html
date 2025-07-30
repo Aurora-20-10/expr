@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Settings</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h2>⚙ FancyZones Settings</h2>
+<label>🌌 Mythic Mode:</label>
+<select id="mythicSelect">
+  <option value="on">Bật</option>
+  <option value="off">Tắt</option>
+</select>
+<button onclick="saveSettings()">💾 Save</button>
+<script>
+const { ipcRenderer } = require('electron');
+function saveSettings(){
+  const mode=document.getElementById('mythicSelect').value;
+  localStorage.setItem('fancyZonesSettings', JSON.stringify({ mythicMode:mode }));
+  ipcRenderer.send('toggle-mythic-mode', mode);
+  alert('✅ Mythic Mode saved!');
+}
+</script>
+</body>
+</html>
