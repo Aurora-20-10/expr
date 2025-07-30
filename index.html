@@ -2,177 +2,23 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>FancyZones Layout Manager</title>
-  <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #181818;
-      color: #fff;
-      overflow: hidden;
-    }
-    #controls {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      background: rgba(0,0,0,0.7);
-      padding: 10px;
-      border-radius: 8px;
-      z-index: 999;
-    }
-    #controls input, #controls button {
-      margin: 3px;
-      padding: 5px;
-      font-size: 14px;
-    }
-    #controls button {
-      cursor: pointer;
-    }
-    .zone {
-      position: absolute;
-      border: 2px dashed #555;
-      background: rgba(100, 149, 237, 0.15);
-      text-align: center;
-      box-sizing: border-box;
-      user-select: none;
-      padding: 5px;
-    }
-    .zone input {
-      width: 90%;
-      margin-top: 5px;
-      padding: 3px;
-      font-size: 12px;
-      border: none;
-      border-radius: 3px;
-    }
-    .zone input:focus {
-      outline: none;
-      box-shadow: 0 0 5px #00bfff;
-    }
-  </style>
+  <title>FancyZones Mythic</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="renderer.js"></script>
 </head>
 <body>
-
-<div id="controls">
-  <label>Tên Layout:</label>
-  <input type="text" id="layoutName" placeholder="Nhập tên layout">
-  <br>
-  <button onclick="addZone()">➕ Thêm Zone</button>
-  <button onclick="saveLayout()">💾 Lưu Layout</button>
-  <button onclick="exportJSON()">⬇ Xuất JSON</button>
-  <button onclick="resetLayout()">🗑 Xóa Layout</button>
-</div>
-
-<script>
-let zoneCount = 0;
-let zonesData = [];
-
-// ➕ Thêm Zone
-function addZone(x=50, y=50, w=200, h=150) {
-  zoneCount++;
-  const zone = document.createElement("div");
-  zone.className = "zone";
-  zone.style.left = x + "px";
-  zone.style.top = y + "px";
-  zone.style.width = w + "px";
-  zone.style.height = h + "px";
-  zone.innerHTML = `
-    <div><strong>Zone ${zoneCount}</strong></div>
-    <input type="text" placeholder="Nhập App hoặc Link" class="zoneInput">
-  `;
-  document.body.appendChild(zone);
-
-  // Kéo – thả
-  interact(zone)
-    .draggable({
-      listeners: {
-        move(event) {
-          const target = event.target;
-          const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-          const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-          target.style.transform = `translate(${x}px, ${y}px)`;
-          target.setAttribute('data-x', x);
-          target.setAttribute('data-y', y);
-        }
-      }
-    })
-    // Resize
-    .resizable({
-      edges: { left: true, right: true, bottom: true, top: true },
-    })
-    .on('resizemove', event => {
-      let { x, y } = event.target.dataset;
-      x = (parseFloat(x) || 0);
-      y = (parseFloat(y) || 0);
-
-      event.target.style.width = event.rect.width + 'px';
-      event.target.style.height = event.rect.height + 'px';
-      event.target.style.transform = `translate(${event.deltaRect.left + x}px, ${event.deltaRect.top + y}px)`;
-
-      event.target.dataset.x = x + event.deltaRect.left;
-      event.target.dataset.y = y + event.deltaRect.top;
-    });
-}
-
-// 💾 Lưu layout vào LocalStorage
-function saveLayout() {
-  const layoutName = document.getElementById("layoutName").value.trim();
-  if (!layoutName) {
-    alert("⚠ Nhập tên layout trước khi lưu!");
-    return;
-  }
-
-  const zones = document.querySelectorAll(".zone");
-  zonesData = [];
-
-  zones.forEach((z, index) => {
-    const inputVal = z.querySelector(".zoneInput").value;
-    zonesData.push({
-      name: `Zone ${index + 1}`,
-      appOrLink: inputVal,
-      left: z.style.left,
-      top: z.style.top,
-      width: z.style.width,
-      height: z.style.height,
-      x: z.dataset.x || 0,
-      y: z.dataset.y || 0
-    });
-  });
-
-  const layout = { layoutName, zones: zonesData };
-  localStorage.setItem("fancyZonesLayout_" + layoutName, JSON.stringify(layout));
-  alert("✅ Layout đã được lưu!");
-}
-
-// ⬇ Xuất file JSON
-function exportJSON() {
-  const layoutName = document.getElementById("layoutName").value.trim();
-  if (!layoutName) {
-    alert("⚠ Nhập tên layout trước khi xuất!");
-    return;
-  }
-
-  const data = localStorage.getItem("fancyZonesLayout_" + layoutName);
-  if (!data) {
-    alert("⚠ Chưa lưu layout để xuất!");
-    return;
-  }
-
-  const blob = new Blob([data], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = layoutName + ".json";
-  a.click();
-}
-
-// 🗑 Xóa layout hiện tại
-function resetLayout() {
-  document.querySelectorAll(".zone").forEach(z => z.remove());
-  zoneCount = 0;
-}
-</script>
-
+  <div id="toolbar">
+    <input id="profileName" placeholder="Tên Profile">
+    <input id="profileColor" type="color" value="#0078D4">
+    <button onclick="addProfile()">➕ Profile</button>
+    <select id="profileList" onchange="switchProfile()"></select>
+    <input id="layoutName" placeholder="Tên Layout">
+    <button onclick="saveLayout()">💾 Lưu Layout</button>
+    <button onclick="applyLayoutElectron()">🚀 Apply Layout</button>
+    <button onclick="applyProfile()">🌐 Apply Profile</button>
+    <button onclick="openOverlay()">🖼 Overlay</button>
+    <button onclick="openSettings()">⚙ Settings</button>
+  </div>
+  <div id="canvas"></div>
 </body>
 </html>
