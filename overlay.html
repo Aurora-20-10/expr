@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="overlay">
+<header>🖼 Overlay Mythic Pro</header>
+<div class="section">
+  <h3>⚡ Quick Launch</h3>
+  <div id="quickLaunch">
+    <div class="quick-btn" ondrop="dropApp(event)" ondragover="allowDrop(event)">Drop App</div>
+  </div>
+</div>
+<div class="section">
+  <h3>🖲 Quick Zones</h3>
+  <div id="quickZones">
+    <div class="zone-slot" data-zone="1" ondrop="dropToZone(event, 1)" ondragover="allowDrop(event)">Zone 1</div>
+    <div class="zone-slot" data-zone="2" ondrop="dropToZone(event, 2)" ondragover="allowDrop(event)">Zone 2</div>
+  </div>
+</div>
+<script>
+const { ipcRenderer } = require('electron');
+function allowDrop(e){ e.preventDefault(); }
+function dropApp(e){ e.preventDefault(); const f=e.dataTransfer.files[0]; if(f) ipcRenderer.send('quick-launch', f.path); }
+function dropToZone(e, z){ e.preventDefault(); const f=e.dataTransfer.files[0]; if(f) ipcRenderer.send('quick-zone', { path:f.path, zone:z }); }
+</script>
+</body>
+</html>
