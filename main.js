@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain, Menu, Tray, shell, Notification, globalShor
 const path = require('path');
 const ffi = require('ffi-napi');
 
-let mainWindow, overlayWindow, tray;
+let mainWindow, overlayWindow, settingsWindow, tray;
 
 // Windows API để di chuyển cửa sổ
 const user32 = ffi.Library('user32', {
@@ -81,5 +81,40 @@ ipcMain.on('open-overlay', () => {
     overlayWindow.loadFile('overlay.html');
   } else {
     overlayWindow.show();
+  }
+});
+ipcMain.on('open-settings', () => {
+  if (!settingsWindow) {
+    settingsWindow = new BrowserWindow({
+      width: 400,
+      height: 300,
+      parent: mainWindow,
+      modal: true,
+      webPreferences: { nodeIntegration: true, contextIsolation: false },
+    });
+    settingsWindow.loadFile('settings.html');
+    settingsWindow.on('closed', () => {
+      settingsWindow = null;
+    });
+  } else {
+    settingsWindow.show();
+  }
+});
+
+ipcMain.on('toggle-mythic-mode', (e, mode) => {
+  if (mainWindow) {
+    mainWindow.webContents.send('apply-mythic-mode', mode);
+  }
+});
+
+ipcMain.on('quick-launch', (e, appPath) => {
+  if (appPath) {
+    require('child_process').spawn(appPath, { detached: true, stdio: 'ignore' }).unref();
+  }
+});
+
+ipcMain.on('quick-zone', (e, data) => {
+  if (data && data.path) {
+    require('child_process').spawn(data.path, { detached: true, stdio: 'ignore' }).unref();
   }
 });
