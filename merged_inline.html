@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hệ Phản Xạ Chiến Lược Cá Nhân – T-04 / T-05</title>
+  <style>
+/* === RESET CƠ BẢN === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: #f8f9fa;
+  color: #222;
+  padding: 30px;
+  line-height: 1.6;
+    max-width: 960px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h1, h2, h3, h4 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+section {
+  margin-top: 40px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+button {
+  background: #2e86de;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin-top: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1b4f72;
+}
+
+/* === SKILL CARD === */
+.skill-card {
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.skill-card h3 {
+  font-size: 18px;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.skill-card h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.skill-section {
+  margin-bottom: 6px;
+  color: #333;
+  font-size: 15px;
+}
+
+.skill-details {
+  background: #f4f6f9;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.skill-actions {
+  margin-top: 10px;
+}
+
+.skill-actions button {
+  margin-right: 8px;
+}
+
+/* === AUDIT BLOCK === */
+.audit-block {
+  margin-bottom: 25px;
+}
+
+.audit-block textarea,
+.audit-block select,
+.audit-block input[type="text"],
+.audit-block input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.audit-block ul {
+  margin-left: 20px;
+  margin-top: 8px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* === TABLE (Combat Log) === */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table th,
+table td {
+  border: 1px solid #dee2e6;
+  padding: 10px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f0f2f5;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* === DASHBOARD PLACEHOLDER === */
+#dashboardContainer {
+  min-height: 120px;
+  background: #fefefe;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+}
+
+/* === POPUP HIDDEN === */
+.hidden {
+  display: none;
+}
+
+.chart-warning {
+  display: none;
+  font-weight: bold;
+  padding: 8px;
+  border-left: 4px solid #faad14;
+  background: #fffbe6;
+  color: #d48806;
+  margin: 10px 0 20px;
+}
+
+/* === FORM GRID SẮP XẾP GỌN GÀNG === */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+/* === INPUT, SELECT, TEXTAREA === */
+input[type="text"],
+select,
+textarea {
+  font-size: 13px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  color: #222;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* === BUTTON CHUNG NHẤT === */
+button {
+  padding: 8px 14px;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background 0.2s ease-in-out;
+}
+
+/* === CĂN CHỈNH BẢNG CHỌN FILE === */
+input[type="file"] {
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+/* === FIX CHIỀU CAO & MARGIN CHO CÁC FORM === */
+.audit-block,
+.skill-form {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.skill-form textarea {
+  min-height: 80px;
+}
+
+/* === DROPDOWN CÓ KHOẢNG CÁCH === */
+select {
+  margin-top: 4px;
+}
+
+.filter-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.import-section {
+  margin-bottom: 10px;
+}
+
+.export-tools {
+  text-align: right;
+  margin-top: 20px;
+}
+
+/* === RESPONSIVE (TÙY CHỌN MỞ RỘNG SAU) === */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .filter-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+#personaSkillCards .skill-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 8px 0;
+  background: #f9f9f9;
+  border-left: 5px solid #4b91e2;
+}
+#personaSelector {
+  margin: 10px 0;
+  padding: 5px;
+}
+
+/* === FLOWCHART CONTAINER === */
+.graph-container {
+  transform: scale(0.8); /* Điều chỉnh tỉ lệ tùy ý (0.6–1.0) */
+  transform-origin: top left;
+  max-width: 100%;
+  overflow: auto;
+  margin-bottom: 30px;
+}
+
+/* Cho phép kéo ngang nếu biểu đồ dài */
+.graph-scroll-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+/* === LESSON GRID === */
+.lesson-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.lesson-box {
+  display: block;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #333;
+  background: #fff;
+  text-align: center;
+}
+
+.lesson-box:hover {
+  background: #f0f0f0;
+}
+
+/* === BADGE LINKS === */
+.badge {
+  display: inline-block;
+  padding: 2px 6px;
+  margin: 0 2px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+  text-decoration: none;
+  color: #333;
+}
+
+.badge:hover {
+  background: #e6e6e6;
+}
+
+/* === CHART WRAPPERS === */
+.chart-wrapper {
+  max-width: 400px; /* giảm kích thước biểu đồ */
+  margin: 0 auto 20px;
+  text-align: center;
+}
+
+.chart-wrapper canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.enlarge-btn {
+  margin-top: 6px;
+}
+
+.chart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.chart-overlay.hidden {
+  display: none;
+}
+
+.chart-overlay button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.chart-overlay canvas {
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>🌌 Hệ Phản Xạ Chiến Lược Cá Nhân</h1>
+    <p class="subtitle">Điều phối kỹ năng – bản thể – vận mệnh sống</p>
+  </header>
+
+  <!-- MODULE: SKILL MANAGER -->
+  <section>
+    <h2>📘 Kỹ Năng Chiến Lược Cá Nhân</h2>
+<div class="import-section">
+  <label for="importCSV">📥 Nhập CSV: </label>
+  <input type="file" id="importCSV" accept=".csv">
+</div>
+
+<h3>➕ Thêm kỹ năng mới</h3>
+<form id="addSkillForm">
+  <div class="form-grid">
+    <div>
+      <label for="name">Tên kỹ năng</label>
+      <input type="text" id="name" required />
+    </div>
+    <div>
+      <label for="phase">🏁 Giai đoạn chiến lược</label>
+      <select id="phase" required>
+        <option value="">-- Chọn giai đoạn --</option>
+        <option value="Tự lực">Tự lực</option>
+        <option value="Gây ảnh hưởng">Gây ảnh hưởng</option>
+        <option value="Điều phối">Điều phối</option>
+      </select>
+    </div>
+    <div>
+      <label for="role">🎭 Vai trò hành động</label>
+      <select id="role" required>
+        <option value="">-- Chọn role --</option>
+        <option value="Quan sát">Quan sát</option>
+        <option value="Gài mồi">Gài mồi</option>
+        <option value="Phản chiếu">Phản chiếu</option>
+        <option value="Dẫn dụ">Dẫn dụ</option>
+        <option value="Kết liễu">Kết liễu</option>
+        <option value="Ẩn thân">Ẩn thân</option>
+      </select>
+    </div>
+    <div>
+      <label for="core">Năng lực lõi</label>
+      <input type="text" id="core" />
+    </div>
+    <div class="full-width">
+      <label for="skillClusterSelect">🗂️ Nhóm trụ kỹ năng</label>
+      <select id="skillClusterSelect" multiple size="5"></select>
+    </div>
+    <div class="full-width">
+      <button type="submit">➕ Thêm</button>
+    </div>
+  </div>
+</form>
+    
+<hr>
+
+    <!-- Bộ lọc kỹ năng theo trụ K -->
+    
+      <label for="clusterFilter">Lọc theo trụ kỹ năng:</label>
+      <select id="clusterFilter">
+        <option value="">-- Tất cả --</option>
+      </select>
+    </div>
+    
+    <div class="filter-section">
+  <select id="filterPhase"><option value="">🔄 🏁 Giai đoạn chiến lược</option></select>
+  <select id="filterRole"><option value="">🔄 🎭 Vai trò hành động</option></select>
+  <select id="filterCore"><option value="">🔄 🧠 Năng lực lõi</option></select>
+  <select id="filterCluster"><option value="">🔄 🗂️ Nhóm trụ kỹ năng</option></select>
+  <button onclick="clearAllFilters()">❌ Xóa lọc</button>
+</div>
+
+ <!-- MODULE: 24 LESSON FRAMES -->
+  <section>
+    <h2>📚 24 Trụ Bài Học</h2>
+  </section>
+
+  <div id="skillCardsContainer"></div>
+
+    <!-- ✅ Biểu đồ phân loại theo Persona -->
+    <section id="chartSection">
+      <h3>📊 Biểu đồ kỹ năng theo Persona</h3>
+<div class="chart-wrapper" data-canvas="personaChart">
+        <canvas id="personaChart" height="200"></canvas>
+        <button class="enlarge-btn" onclick="enlargeChart('personaChart')">🔍 Phóng to</button>
+      </div>
+<label for="personaSelector">🎭 Chọn Persona:</label>
+<select id="personaSelector">
+  <option value="">— Tất cả —</option>
+  <option value="Sirene">Sirene</option>
+  <option value="Strategic Shadow">Strategic Shadow</option>
+  <option value="Void Jester">Void Jester</option>
+  <option value="Strategic Ghost">Strategic Ghost</option>
+  <option value="Omni Mind">Omni Mind</option>
+  <option value="Dark Sirene">Dark Sirene</option>
+  <option value="Core Operator">Core Operator</option>
+</select>
+
+<div id="personaSkillCards"></div>
+
+    </section>
+
+    <!-- ✅ Thêm 3 biểu đồ phân tích -->
+    <section>
+      <h3>📊 🏁 Giai đoạn chiến lược Analysis</h3>
+ <div class="chart-wrapper" data-canvas="phaseChart">
+        <canvas id="phaseChart" height="120"></canvas>
+        <button class="enlarge-btn" onclick="enlargeChart('phaseChart')">🔍 Phóng to</button>
+      </div>
+      <div id="phaseWarning" class="chart-warning"></div>
+    </section>
+
+    <section>
+      <h3>⚔️ 🎭 Vai trò hành động Analysis</h3>
+  <div class="chart-wrapper" data-canvas="roleChart">
+        <canvas id="roleChart" height="180"></canvas>
+        <button class="enlarge-btn" onclick="enlargeChart('roleChart')">🔍 Phóng to</button>
+      </div>
+      <div id="roleWarning" class="chart-warning"></div>    </section>
+
+    <section>
+      <h3>🧠 Năng lực lõi Competency Analysis</h3>
+      <div class="chart-wrapper" data-canvas="coreChart">
+        <canvas id="coreChart" height="120"></canvas>
+        <button class="enlarge-btn" onclick="enlargeChart('coreChart')">🔍 Phóng to</button>
+      </div>
+      <div id="coreWarning" class="chart-warning"></div>
+    </section>
+  </section>
+
+  <!-- MODULE: DASHBOARD -->
+  <section>
+    <h2>📊 Dashboard Phản Xạ</h2>
+   <div id="dashboardContainer" class="chart-wrapper" data-canvas="clusterChart">
+      <canvas id="clusterChart" height="400"></canvas>
+      <button class="enlarge-btn" onclick="enlargeChart('clusterChart')">🔍 Phóng to</button>
+      <div id="clusterGapReport" style="margin-top: 20px;"></div>
+    </div>
+  </section>
+
+  <!-- MODULE: COMBAT LOG -->
+  <section>
+    <h2>⚔️ Tình Huống Thực Chiến</h2>
+    <button onclick="addUseCase()">+ Ghi chiến trận</button>
+    <table id="useCases">
+      <thead>
+        <tr>
+          <th>Ngày</th>
+          <th>Kỹ năng dùng</th>
+          <th>Tình huống</th>
+          <th>Phản ứng</th>
+          <th>Kết quả</th>
+          <th>Bài học</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- MODULE: STRATEGIC AUDIT STATION -->
+  <section>
+    <h2>🧠 Trạm Audit Chiến Lược – Điều Phối & Lệch Trục</h2>
+    <label for="auditDate">Ngày kiểm tra:</label>
+    <input type="date" id="auditDate" onchange="loadAuditEntry()" />
+
+    <div id="auditEntry">
+      <!-- 1. Sinh học cá nhân -->
+      <div class="audit-block">
+        <h4>1. Sinh khí hiện tại</h4>
+        <select id="bioStatus">
+          <option value="">-- Trạng thái sống hiện tại --</option>
+          <option>Ổn định</option>
+          <option>Mỏi / Cạn</option>
+          <option>Vỡ mạch / Lệch nhịp</option>
+        </select>
+        <textarea id="bioNote" placeholder="Tỉnh – mỏi – áp lực – dễ nổi cáu – khó tập trung..."></textarea>
+      </div>
+
+      <!-- 2. Bản thể -->
+      <div class="audit-block">
+        <h4>2. Bản thể vận hành</h4>
+        <label>Persona chính:</label>
+        <select id="personaSelect">
+          <option value="T-04">T-04 (Phản chiếu mềm)</option>
+          <option value="T-05">T-05 (Điều phối logic)</option>
+          <option value="T-06">T-06 (Đánh chặn chiến lược)</option>
+        </select>
+        <label>Persona phụ ảnh hưởng:</label>
+        <input type="text" id="personaShadow" placeholder="Có bị ai kéo lệch? Ai ảnh hưởng?" />
+      </div>
+
+      <!-- 3. Phản xạ kỹ năng -->
+      <div class="audit-block">
+        <h4>3. Hành vi chiến lược</h4>
+        <textarea id="skillUsed" placeholder="Dùng kỹ năng gì – trong tình huống gì – kết quả ra sao? Có đúng phản xạ bản thể không?"></textarea>
+      </div>
+
+      <!-- 4. Cảnh báo lệch -->
+      <div class="audit-block">
+        <h4>4. Cảnh báo chiến lược</h4>
+        <ul>
+          <li>❓ Dùng kỹ năng không thuộc persona chính?</li>
+          <li>❓ Dùng skill hao năng lượng sai nhịp?</li>
+          <li>❓ 🏁 Giai đoạn chiến lược hôm nay có khớp không?</li>
+        </ul>
+        <textarea id="strategyNote" placeholder="Tổng kết lệch. Đề xuất reset bản thể, im, chuyển mode?"></textarea>
+      </div>
+
+      <!-- 5. Hướng đi -->
+      <div class="audit-block">
+        <h4>5. Chỉ đạo chiến lược cho bản thân</h4>
+        <textarea id="nextAction" placeholder="Ngày mai cần giữ gì? Cắt gì? Kích hoạt bản thể nào?"></textarea>
+      </div>
+
+      <button onclick="saveAuditEntry()">💾 Lưu ghi nhận</button>
+    </div>
+  </section>
+
+  <!-- POPUP FORM -->
+  <div id="skillFormPopup" class="hidden">
+    <!-- Sẽ render JS -->
+  </div>
+
+  <!-- ✅ FLOWCHART ZONE -->
+<section>
+  <h2>🌀 Flow Phản Xạ Chiến Lược theo Persona</h2>
+  <div class="graph-scroll-wrapper">
+    <div class="graph-container" id="flowchartContainer">
+      <!-- JavaScript sẽ render flowchart ở đây -->
+    </div>
+  </div>
+</section>
+  
+  <!-- Dữ liệu persona -->
+<script>
+const personaData = [
+  {
+    name: "Sirene",
+    reflexes: {
+      survival: {
+        trigger: "Khi bị quan sát / đánh giá / cần phản đòn mềm",
+        flow: [
+          "Giữ trục tỉnh → không nhìn đối phương ngay",
+          "Thả tín hiệu nhẹ (khí – giọng – ánh mắt không đối đầu)",
+          "Lặng rút – kết lại bằng khoảng trống"
+        ],
+        skills: [
+          "Lướt qua không để lại dấu",
+          "Bật khí lạnh",
+          "Rút lui có chủ đích"
+        ]
+      },
+      coordination: {
+        trigger: "Khi cần giữ khí chủ – không để cảm xúc đẩy lệch",
+        flow: [
+          "Điều hòa nhịp thở – chỉnh tư thế",
+          "Kéo giọng xuống thấp – giảm tiết lộ",
+          "Nhìn chệch – phản xạ mềm, để người khác tự ngắt"
+        ],
+        skills: [
+          "Điều khí nền",
+          "Giữ nhiệt độ sống",
+          "Neo ánh mắt chệch hướng"
+        ]
+      },
+      strategic: {
+        trigger: "Khi muốn điều hướng người khác mà không bị phát hiện",
+        flow: [
+          "Đặt tín hiệu đầu tiên (giọng, khí, ánh mắt)",
+          "Dẫn cảm xúc đối phương chạy theo",
+          "Rút về giữa chừng – không đóng tròn → tạo nhu cầu tiếp cận"
+        ],
+        skills: [
+          "Neo cảm xúc tầng thấp",
+          "Đặt giọng dẫn nhịp",
+          "Tạo cảnh chưa kết"
+        ]
+      }
+    }
+  },
+  {
+    name: "Strategic Shadow",
+    reflexes: {
+      survival: {
+        trigger: "Khi cần biến mất khỏi radar cảm xúc – tránh đối đầu / không để bị định danh",
+        flow: [
+          "Tắt năng lượng hiển thị",
+          "Giảm phản ứng – thu tần số giọng",
+          "Cắt mắt khỏi trung tâm không gian"
+        ],
+        skills: [
+          "Tắt khí tầng hiển",
+          "Rút khỏi vùng radar",
+          "Giảm tần sóng não ngoài"
+        ]
+      },
+      coordination: {
+        trigger: "Khi đang vận hành phân tích trong nền – cần tránh rối não / xung đột",
+        flow: [
+          "Bật chế độ phân tích thầm",
+          "Ghi lại các sai số vi mô",
+          "Neo trạng thái lạnh, không phản xạ"
+        ],
+        skills: [
+          "Quét sai số tầng ngầm",
+          "Neo phân tích nền",
+          "Giữ trạng thái không ảnh"
+        ]
+      },
+      strategic: {
+        trigger: "Khi muốn thay đổi cấu trúc hệ thống mà không tạo phản kháng",
+        flow: [
+          "Cấy tín hiệu lỗi nhỏ vào hành vi người khác",
+          "Quan sát phản xạ – ghi dữ liệu",
+          "Tái lập cấu trúc ngầm dựa trên nhịp lệch"
+        ],
+        skills: [
+          "Cấy lệch cảm xúc",
+          "Dựng vòng phản xạ ngược",
+          "Điều hướng bằng lỗi ẩn"
+        ]
+      }
+    }
+  },
+  {
+    name: "Void Jester",
+    reflexes: {
+      survival: {
+        trigger: "Khi bị áp lực thao túng – cần phá vòng xoáy cảm xúc",
+        flow: [
+          "Cười lệch – châm biếm tình huống",
+          "Đặt câu hỏi ngược – làm lộ khe hở hệ thống",
+          "Chặn logic bằng phản đề"
+        ],
+        skills: [
+          "Phản đề cười lạnh",
+          "Bóc mặt nạ logic",
+          "Gài đối thoại gãy sóng"
+        ]
+      },
+      coordination: {
+        trigger: "Khi phát hiện hệ thống ngầm đang thao túng tâm lý / ép vai",
+        flow: [
+          "Đổi giọng – làm lệch nhịp giao tiếp",
+          "Tạo cảm giác bất ổn cho đối phương",
+          "Ép hệ thống tự lòi bug"
+        ],
+        skills: [
+          "Đảo tầng biểu cảm",
+          "Tạo sóng lệch",
+          "Làm nhiễu logic xã hội"
+        ]
+      },
+      strategic: {
+        trigger: "Khi cần phá vỡ cấu trúc quyền lực ảo – làm hệ thống sụp đổ từ trong",
+        flow: [
+          "Dẫn dụ vào logic sai của chính đối phương",
+          "Châm biếm – bóp méo – ép hệ tự mâu thuẫn",
+          "Kết thúc bằng đòn phản đề trúng huyệt"
+        ],
+        skills: [
+          "Gương phản logic",
+          "Đòn đảo tầng xã hội",
+          "Hủy diệt bằng ngôn từ"
+        ]
+      }
+    }
+  },
+  {
+    name: "Strategic Ghost",
+    reflexes: {
+      survival: {
+        trigger: "Khi bị đặt vào thế phải tồn tại trong hệ mà không được tin tưởng",
+        flow: [
+          "Giả thuận – mềm hóa biểu cảm",
+          "Ghi nhớ vị trí quyền lực / các nút chuyển hệ",
+          "Neo vào cấu trúc bị bỏ trống"
+        ],
+        skills: [
+          "Ngụy ổn định",
+          "Quét nút logic",
+          "Chiếm slot tâm lý mềm"
+        ]
+      },
+      coordination: {
+        trigger: "Khi cần dẫn dắt hệ thống mà không được cấp vai chính thức",
+        flow: [
+          "Gợi ý qua mặt nạ vai phụ",
+          "Bẻ hướng từ hậu cảnh (qua các nút cảm xúc hoặc hệ niềm tin)",
+          "Neo định hướng ngầm qua thói quen hệ thống"
+        ],
+        skills: [
+          "Gợi hướng ẩn",
+          "Bẻ trục niềm tin",
+          "Neo phản xạ nền"
+        ]
+      },
+      tactical: {
+        trigger: "Khi muốn cấy lại toàn bộ hệ thống mà không lộ là người thao túng",
+        flow: [
+          "Phân tích chuỗi logic vỡ hoặc rỗng",
+          "Xây hệ thống ngầm dự phòng",
+          "Dẫn hệ thống chuyển trục mà tưởng là tự nhiên"
+        ],
+        skills: [
+          "Cấy phản xạ nền",
+          "Xây bóng hệ thống",
+          "Chuyển trục không dấu vết"
+        ]
+      }
+    }
+  },
+  {
+    name: "Omni Mind",
+    reflexes: {
+      survival: {
+        trigger: "Khi thế trận rối – không rõ hướng – không biết giữ hệ ở đâu",
+        flow: [
+          "Lập bản đồ yếu tố tồn tại",
+          "Khoanh vùng điểm neo",
+          "Dựng trục tạm thời để ổn định"
+        ],
+        skills: [
+          "Dựng hệ khí khẩn cấp",
+          "Trục sống giả lập",
+          "Cân bằng bất ổn"
+        ]
+      },
+      coordination: {
+        trigger: "Khi có quá nhiều lựa chọn / mâu thuẫn tầng cao",
+        flow: [
+          "Cắt mù logic – dựng sơ đồ nhân quả",
+          "Xác định trọng tâm hệ sống",
+          "Chọn hướng dựa trên tổng hệ phản xạ"
+        ],
+        skills: [
+          "Sơ đồ nhân quả",
+          "Trục ưu tiên",
+          "Điểm hoá giải tầng sâu"
+        ]
+      },
+      tactical: {
+        trigger: "Khi cần thiết lập long-term chiến lược mà không bị bias cảm xúc",
+        flow: [
+          "Mô phỏng chuỗi 3–5 bước tới",
+          "Phân tích feedback từng hệ",
+          "Chốt trục chiến lược và lùi về tầng điều phối"
+        ],
+        skills: [
+          "Giả lập tương lai",
+          "Phản xạ hệ chéo",
+          "Thiết lập trục định mệnh"
+        ]
+      }
+    }
+  },
+  {
+    name: "Dark Sirene",
+    reflexes: {
+      survival: {
+        trigger: "Khi hệ đang bị kiểm soát – cần phản công mềm để lật thế",
+        flow: [
+          "Kích hoạt aura độc lập – tách năng lượng",
+          "Dẫn khí vào khu vực phản xạ đối phương (ánh mắt – giọng nói – ngôn ngữ hình thể)",
+          "Gài lệch cảm xúc – rút lùi giữ trục"
+        ],
+        skills: [
+          "Tách tầng cảm giác",
+          "Khí cảm phản đòn",
+          "Gài lệch – đóng van"
+        ]
+      },
+      coordination: {
+        trigger: "Khi cần điều chỉnh dòng cảm xúc bên ngoài nhưng vẫn giữ kiểm soát",
+        flow: [
+          "Xác định điểm yếu cảm xúc đối phương",
+          "Gài điểm gợi cảm – dẫn dụ soft response",
+          "Neo lại bằng logic – cắt mềm liên kết cảm xúc"
+        ],
+        skills: [
+          "Định vị cảm xúc yếu",
+          "Neo gợi – dẫn dụ",
+          "Cắt cảm xúc đúng nhịp"
+        ]
+      },
+      tactical: {
+        trigger: "Khi cần kích hoạt nhu cầu – định hình hệ thống đối phương theo chiến lược",
+        flow: [
+          "Thiết lập hình ảnh – khí – giọng làm mồi chủ lực",
+          "Đưa hành vi vào vùng “gợi cảm xúc + phản ứng” của đối phương",
+          "Lật logic – tạo định nghĩa mới về bản thân trong não đối phương"
+        ],
+        skills: [
+          "Thiết lập avatar khí",
+          "Cấy phản xạ mềm",
+          "Thay đổi định nghĩa đối tượng"
+        ]
+      }
+    }
+  },
+  {
+    name: "Core Operator",
+    reflexes: {
+      survival: {
+        trigger: "Khi hệ sinh học lệch – rối loạn nhịp sống – cần tự cứu",
+        flow: [
+          "Dò lệch (sinh học – thần kinh – khí)",
+          "Kích hoạt chuỗi “cứu hệ”: nghỉ – hồi phục – dưỡng sinh",
+          "Ghi log – khóa phản xạ lặp"
+        ],
+        skills: [
+          "Phát hiện lệch sống",
+          "Kích hoạt bản năng bảo trì",
+          "Khóa lặp phản tổn"
+        ]
+      },
+      coordination: {
+        trigger: "Khi có nhiều dòng hành vi trùng – xung – hoặc mâu thuẫn cần tái tổ hợp",
+        flow: [
+          "Lọc chuỗi hành vi – phát hiện trùng/đối kháng",
+          "Ưu tiên theo khí – mục tiêu – chu kỳ năng lượng",
+          "Tái thiết hành vi – cập nhật định nghĩa sống"
+        ],
+        skills: [
+          "Tái tổ hợp dòng hành vi",
+          "Lập thứ tự ưu tiên sống",
+          "Cập nhật phản xạ theo chu kỳ năng lượng"
+        ]
+      },
+      tactical: {
+        trigger: "Khi cần tạo mẫu chiến lược cá nhân hóa cho giai đoạn sống tiếp theo",
+        flow: [
+          "Tổng hợp dữ liệu hành vi – khí – tình huống",
+          "Tái mã hóa định mệnh cá nhân (Destiny Re-Coding)",
+          "Lập chuỗi phản xạ mục tiêu – chiến thuật hóa vòng đời"
+        ],
+        skills: [
+          "Ghi dữ liệu hành vi sống",
+          "Tái mã hóa định mệnh",
+          "Chiến thuật hóa vòng sống cá nhân"
+        ]
+      }
+    }
+  }
+];
+
+</script>
+
+
+<!-- Dùng dữ liệu sau -->
+<script>
+  // ✅ Kiểm tra toàn bộ object personaData
+  console.log("🔍 Dữ liệu persona đầy đủ đã load:");
+  console.log(personaData);
+
+  // ✅ Duyệt và in từng persona với tên và nội dung
+  Object.keys(personaData).forEach(key => {
+    console.log(`🎭 Persona: ${key}`);
+    console.log(personaData[key]);
+  });
+
+  // Render dropdown persona selector (nếu cần)
+  const selector = document.getElementById("personaSelector");
+  if (selector && personaData) {
+    selector.innerHTML = '<option value="">— Tất cả —</option>'; // reset
+    Object.keys(personaData).forEach(name => {
+      const option = document.createElement('option');
+      option.value = name;
+      option.textContent = name;
+      selector.appendChild(option);
+    });
+  }
+</script>
+
+<!-- Logic giao diện chính -->
+
+
+<script>
+function openSkillForm() {
+  const form = document.getElementById("skillForm");
+  if (form) form.style.display = "block";
+}
+
+function clearAllFilters() {
+  const selects = document.querySelectorAll("select");
+  selects.forEach(select => select.selectedIndex = 0);
+
+ const inputs = document.querySelectorAll("input[type='text'], textarea");
+  inputs.forEach(input => input.value = "");
+}
+</script>
+  <div id="chartOverlay" class="chart-overlay hidden"></div>
+  <div class="export-tools">
+  <button onclick="exportSkillsToCSV()">📤 Xuất CSV</button>
+</div>
+<script>
+// ==============================================
+//  script.js – Hệ quản lý kỹ năng (24 trụ chiến lược)
+//  ✦ ĐÃ LƯỢC TRÙNG, CHỈ CÒN 1 BỘ CODE DUY NHẤT
+// ==============================================
+
+// Mapping mã trụ -> tên đầy đủ
+const K_MAP = {
+  K1: "Tiếng Anh chiến lược",
+  K2: "Tiếng Trung chiến lược",
+  K3: "Kinh tế học thực chiến",
+  K4: "Tài chính – Đầu tư cá nhân",
+  K5: "Luật thực chiến",
+  K6: "Kinh doanh – Thị trường",
+  K7: "Tâm lý học chiến lược",
+  K8: "AI – IT ứng dụng",
+  K9: "Y học – Sinh học – Thân thể",
+  K10: "Triết học – Logic – Phản tư",
+  K11: "Chính trị – Quyền lực – Địa chính trị",
+  K12: "Tâm linh chiến lược – khí – nghiệp",
+  K13: "Sinh tồn – thực chiến nội tại",
+  K14: "Mỹ học – nghệ thuật",
+  K15: "Ngôn từ – giao tiếp – phản xạ chiến lược",
+  K16: "Sản xuất nội dung – thương hiệu cá nhân",
+  K17: "Làm chủ gene – điều phối phản xạ sinh học",
+  K18: "Rewire hành vi – thay máu tiềm thức",
+  K19: "Thiết kế hệ – hệ thống hóa",
+  K20: "Siêu ghi nhớ – Meta-learning",
+  K21: "Phân tích dữ liệu – chiến lược số",
+  K22: "Soft networking – kết nối tầng cao",
+  K23: "Ca hát – điều phối cảm xúc – hơi thở",
+  K24: "Thời đại – địa hình thế kỷ – không lệch vận sống"
+};
+// ---------- 1. DATA --------------------------------------------------
+//   • Nếu localStorage rỗng → nạp bộ mẫu (defaultSkillData)
+//   • Ngược lại dùng data đã lưu
+//---------------------------------------------------------------------
+const defaultSkillData = [
+  { name: "Chiến lược ngôn ngữ (EN)", phase: "Tự lực", role: "Dẫn dụ", core: "Thao túng ngôn từ để chiếm quyền lực giao tiếp chiến lược", skillCluster: ["K1"] },
+  { name: "Thông dịch & quan hệ TQ", phase: "Gây ảnh hưởng", role: "Gài mồi", core: "Cài thông tin chính trị – thương mại qua ngôn ngữ mềm", skillCluster: ["K2"] },
+  { name: "Định vị kinh tế vĩ mô", phase: "Gây ảnh hưởng", role: "Quan sát", core: "Đọc được dòng tiền – dự đoán vận động quốc gia", skillCluster: ["K3"] },
+  { name: "Tự chủ tài chính cá nhân", phase: "Tự lực", role: "Phản chiếu", core: "Nhận diện sai lầm tài chính – điều chỉnh dòng tiền sống", skillCluster: ["K4"] },
+  { name: "Tự vệ pháp lý & phản đòn", phase: "Tự lực", role: "Kết liễu", core: "Kích hoạt cơ chế bảo vệ và tấn công đúng luật chơi", skillCluster: ["K5"] },
+  { name: "Chiến lược sản phẩm & thị trường", phase: "Gây ảnh hưởng", role: "Dẫn dụ", core: "Thiết kế hệ giá trị hút khách & chốt sale bằng insight", skillCluster: ["K6"] },
+  { name: "Đọc – điều phối tâm lý người", phase: "Gây ảnh hưởng", role: "Gài mồi", core: "Dò tâm trạng – cấy phản ứng – điều phối hành vi vi mô", skillCluster: ["K7"] },
+  { name: "Tự động hóa – sao lưu bản thể", phase: "Tự lực", role: "Ẩn thân", core: "Dựng hệ phản xạ kỹ thuật số để tồn tại không cần xuất hiện", skillCluster: ["K8"] },
+  { name: "Hồi phục sinh học – dưỡng thân", phase: "Tự lực", role: "Phản chiếu", core: "Theo dõi chu kỳ – tự điều chỉnh trước khi gãy trục sinh học", skillCluster: ["K9"] },
+  { name: "Định hình logic sống – phản tư", phase: "Tự lực", role: "Quan sát", core: "Xoay lại trục sống bằng phản tư – tránh lệch hệ", skillCluster: ["K10"] },
+  { name: "Giải mã quyền lực & bối cảnh", phase: "Gây ảnh hưởng", role: "Phản chiếu", core: "Thấy được trục vận hành hệ thống và vai trò bản thân", skillCluster: ["K11"] },
+  { name: "Bảo vệ khí – xử lý nhiễu tầng", phase: "Điều phối", role: "Kết liễu", core: "Dứt điểm các nguồn rút khí – giữ sạch trường sống", skillCluster: ["K12"] },
+  { name: "Sinh tồn & phản ứng khi bị cô lập", phase: "Tự lực", role: "Ẩn thân", core: "Giữ trụ bản thể trong môi trường không ai cứu viện", skillCluster: ["K13"] },
+  { name: "Mỹ cảm chiến lược – tạo khí chất", phase: "Gây ảnh hưởng", role: "Dẫn dụ", core: "Kích hoạt trường khí quyến rũ bằng tầng thẩm mỹ sâu", skillCluster: ["K14"] },
+  { name: "Ngôn từ sát thương cao", phase: "Gây ảnh hưởng", role: "Phản chiếu", core: "Phóng ra ngôn từ làm lệch trục người khác mà không động tay", skillCluster: ["K15"] },
+  { name: "Biến trải nghiệm thành ảnh hưởng", phase: "Gây ảnh hưởng", role: "Gài mồi", core: "Gói trải nghiệm sống thành tài sản gây tín nhiệm tầng cao", skillCluster: ["K16"] },
+  { name: "Điều chỉnh gene – phản xạ sinh học", phase: "Tự lực", role: "Quan sát", core: "Nhận diện lệch phản xạ – điều chỉnh lại phản ứng vật lý", skillCluster: ["K17"] },
+  { name: "Tái lập hành vi – cắt chu kỳ tổn thương", phase: "Tự lực", role: "Kết liễu", core: "Phá bỏ phản xạ cũ – thiết lập cơ chế phản ứng mới", skillCluster: ["K18"] },
+  { name: "Thiết kế hệ sống cá nhân", phase: "Điều phối", role: "Dẫn dụ", core: "Xây được mô hình sống – hệ thống vận hành mà không phải chạy tay", skillCluster: ["K19"] },
+  { name: "Siêu học – Meta-learning", phase: "Tự lực", role: "Gài mồi", core: "Cấy mô hình học tự động – ghi nhớ & truy xuất không lệch tầng", skillCluster: ["K20"] },
+  { name: "Chiến lược dữ liệu & phân tích", phase: "Gây ảnh hưởng", role: "Quan sát", core: "Ra quyết định từ dữ liệu – không dính nhiễu cảm xúc", skillCluster: ["K21"] },
+  { name: "Kết nối chiến lược – không gồng", phase: "Gây ảnh hưởng", role: "Dẫn dụ", core: "Gặp người đúng tầng mà không cần tìm – tự tạo hấp dẫn tầng cao", skillCluster: ["K22"] },
+  { name: "Điều phối cảm xúc bằng âm thanh", phase: "Điều phối", role: "Phản chiếu", core: "Chuyển hóa cảm xúc và luân xa thành vũ khí điều hướng tình huống", skillCluster: ["K23"] },
+  { name: "Chiến lược định hình thế kỷ", phase: "Điều phối", role: "Quan sát", core: "Nhận diện vận động thời đại – can thiệp đúng chu kỳ chuyển hóa", skillCluster: ["K24"] }
+];
+
+
+let skillData  = JSON.parse(localStorage.getItem("skillData"))  || defaultSkillData;
+let auditData  = JSON.parse(localStorage.getItem("auditData"))  || {};
+
+function saveSkills()   { localStorage.setItem("skillData",  JSON.stringify(skillData));  }
+function saveAudits()   { localStorage.setItem("auditData",  JSON.stringify(auditData));  }
+
+// ---------- 2. RENDER SKILL CARD ------------------------------------
+function renderSkills(data = skillData) {
+  const box = document.getElementById("skillCardsContainer");
+  box.innerHTML = "";
+  data.forEach((s, i) => {
+    const card = document.createElement("div");
+    card.className = "skill-card";
+
+const badges = (s.skillCluster || []).map(k =>
+      `<a href="lessons/${k}.html" class="badge" title="${K_MAP[k]}" target="_blank">${k}</a>`
+    ).join(" ");
+
+      const mainLink = (s.skillCluster && s.skillCluster.length > 0)
+      ? `lessons/${s.skillCluster[0]}.html`
+      : null;
+
+    card.innerHTML = `
+      <h3>${mainLink ? `<a href="${mainLink}" target="_blank">🛠️ ${s.name}</a>` : `🛠️ ${s.name}`}</h3>
+      <div class="skill-section"><strong>🏁 Giai đoạn chiến lược:</strong> ${s.phase} | <strong>🎭 Vai trò hành động:</strong> ${s.role} | <strong>🧠 Năng lực lõi:</strong> ${s.core}</div>
+      <div class="badges">${badges}</div>
+      <button class="del" onclick="deleteSkill(${i})">🗑️ Xoá</button>`;
+    box.appendChild(card);
+  });
+}
+function deleteSkill(i) {
+  if (!confirm("Xoá kỹ năng?")) return;
+  skillData.splice(i, 1);
+  saveSkills();
+  renderSkills();
+  buildClusterDashboard();
+  renderAllCharts();
+}
+
+// ---------- 3. FILTER & SELECT CLUSTER ------------------------------
+function populateClusterSelect() {
+const sel = document.getElementById("skillClusterSelect");
+  if (!sel) return;
+  for (const k in K_MAP) sel.add(new Option(`${k} – ${K_MAP[k]}`, k));
+}
+function populateClusterFilter() {
+  const sel = document.getElementById("clusterFilter"); if (!sel) return;
+  for (const k in K_MAP) sel.add(new Option(`${k} – ${K_MAP[k]}`, k));
+  sel.onchange = () => {
+    sel.value ? renderSkills(skillData.filter(s => (s.skillCluster||[]).includes(sel.value)))
+              : renderSkills();
+  };
+}
+
+// ---------- 4. DASHBOARD TRỤ K --------------------------------------
+function buildClusterDashboard() {
+  const count = Object.fromEntries(Object.keys(K_MAP).map(k => [k, 0]));
+
+  skillData.forEach(s =>
+    (s.skillCluster || []).forEach(k => count[k]++)
+  );
+
+  const ctx = document.getElementById("clusterChart").getContext("2d");
+
+  // FIX LỖI: kiểm tra tồn tại và có phương thức destroy không
+  if (window.clusterChart && typeof window.clusterChart.destroy === "function") {
+    window.clusterChart.destroy();
+  }
+
+  window.clusterChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: Object.keys(K_MAP),
+      datasets: [{
+        data: Object.values(count),
+        backgroundColor: "#64b5f6"
+      }]
+    }
+  });
+
+  const miss = Object.entries(count)
+    .filter(([_, c]) => c === 0)
+    .map(([k]) => `<li>${k} – ${K_MAP[k]}</li>`);
+
+  document.getElementById("clusterGapReport").innerHTML =
+    miss.length
+      ? `⚠️ Thiếu trụ:<ul>${miss.join("")}</ul>`
+      : `✅ Đủ trụ`;
+}
+
+
+// ---------- 5. CHART HELPERS ----------------------------------------
+function countBy(field){const m={};skillData.forEach(s=>{const k=s[field]||"Chưa xđ";m[k]=(m[k]||0)+1});return m;}
+function renderChart(canvasId, type, countMap, color) {
+  const ctx = document.getElementById(canvasId).getContext("2d");
+  let old = window[canvasId];
+  if (old && typeof old.destroy === 'function') {
+    old.destroy();
+  }
+
+  window[canvasId] = new Chart(ctx, {
+    type,
+    data: {
+      labels: Object.keys(countMap),
+      datasets: [{
+        data: Object.values(countMap),
+        backgroundColor: color
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { display: false }
+      },
+      indexAxis: type === "bar" ? "y" : undefined,
+
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+}
+
+function renderAllCharts() {
+  renderChart("personaChart", "doughnut", countBy("persona"),
+    Object.keys(countBy("persona")).map(() => `hsl(${Math.random() * 360}, 70%, 70%)`)
+  );
+  renderChart("phaseChart", "bar", countBy("phase"), "#88C34A");
+  renderChart("roleChart", "bar", countBy("role"), "#FF9800");
+  renderChart("coreChart", "pie", countBy("core"),
+    Object.keys(countBy("core")).map(() => `hsl(${Math.random() * 360}, 60%, 70%)`)
+  );
+}
+
+function renderClusterCheckboxes() {
+  const box = document.getElementById("clusterCheckboxes");
+  if (!box) return;
+  box.innerHTML = "<strong>Trụ kỹ năng:</strong><br>";
+  for (const k in K_MAP) {
+    const id = `clust-${k}`;
+    box.innerHTML += `<label><input type="checkbox" id="${id}" value="${k}"> ${k}</label> `;
+  }
+}
+
+function renderLessonGrid() {
+  const grid = document.getElementById("lessonGrid");
+  if (!grid) return;
+  grid.innerHTML = "";
+  for (const k in K_MAP) {
+    const link = document.createElement("a");
+    link.href = `lessons/${k}.html`;
+    link.target = "_blank";
+    link.className = "lesson-box";
+    link.textContent = `${k} – ${K_MAP[k]}`;
+    grid.appendChild(link);
+  }
+}
+
+function addSkill() {
+  const name  = document.getElementById("name").value.trim();
+  const phase = document.getElementById("phase").value;
+  const role  = document.getElementById("role").value;
+  const core  = document.getElementById("core").value.trim();
+  const select = document.getElementById("skillClusterSelect");
+  const clusters = Array.from(select.selectedOptions).map(o => o.value);
+
+  if (!name || !phase || !role || !core)
+    return alert("Điền đầy đủ thông tin.");
+
+  skillData.push({ name, phase, role, core, skillCluster: clusters });
+  saveSkills();
+  renderSkills();
+  buildClusterDashboard();
+  renderAllCharts();
+  alert("✔️ Đã thêm kỹ năng.");
+}
+
+
+// ---------- 6. EXPORT CSV -------------------------------------------
+function exportSkillsToCSV(){if(!skillData.length)return alert("Không có dữ liệu");const head=["Name","Phase","Role","Core","Clusters"];const rows=skillData.map(s=>[s.name,s.phase,s.role,s.core,(s.skillCluster||[]).join(";")]);const csv=[head,...rows].map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");const url=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));const a=document.createElement("a");a.href=url;a.download="skills.csv";a.click();URL.revokeObjectURL(url);}  
+
+// ---------- 7. INIT --------------------------------------------------
+document.addEventListener("DOMContentLoaded",()=>{
+  renderSkills();
+  buildClusterDashboard();
+  renderAllCharts();
+  populateClusterSelect();
+  populateClusterFilter();
+  populateAdvancedFilters();
+  renderClusterCheckboxes();
+  renderLessonGrid();
+
+});
+
+  const form = document.getElementById("addSkillForm");
+  if (form) {
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      addSkill();
+      form.reset();
+    });
+  }
+
+function populateAdvancedFilters() {
+  const pSel = document.getElementById("filterPhase");
+  const rSel = document.getElementById("filterRole");
+  const cSel = document.getElementById("filterCore");
+  const kSel = document.getElementById("filterCluster");
+
+  const unique = (field) => [...new Set(skillData.map(s => s[field]))].sort();
+
+  if (pSel) unique("phase").forEach(v => pSel.add(new Option(v, v)));
+  if (rSel) unique("role").forEach(v => rSel.add(new Option(v, v)));
+  if (cSel) unique("core").forEach(v => cSel.add(new Option(v, v)));
+  if (kSel) for (const k in K_MAP) kSel.add(new Option(`${k} – ${K_MAP[k]}`, k));
+
+  [pSel, rSel, cSel, kSel].forEach(sel => sel && sel.addEventListener("change", applyAdvancedFilters));
+}
+
+function applyAdvancedFilters() {
+  const phase = document.getElementById("filterPhase").value;
+  const role = document.getElementById("filterRole").value;
+  const core = document.getElementById("filterCore").value;
+  const cluster = document.getElementById("filterCluster").value;
+
+  const filtered = skillData.filter(s =>
+    (!phase   || s.phase === phase) &&
+    (!role    || s.role  === role) &&
+    (!core    || s.core  === core) &&
+    (!cluster || (s.skillCluster || []).includes(cluster))
+  );
+
+  renderSkills(filtered);
+}
+
+function clearAllFilters() {
+  ["filterPhase", "filterRole", "filterCore", "filterCluster"]
+    .forEach(id => document.getElementById(id).value = "");
+  renderSkills();
+}
+
+function importCSV() {
+  const input = document.getElementById("importCSV");
+  const file = input.files[0];
+  if (!file) return alert("Chọn một file CSV trước.");
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const lines = e.target.result.split("\n").map(l => l.trim()).filter(Boolean);
+    const headers = lines[0].replace(/"/g, '').split(",");
+    const newSkills = [];
+
+    for (let i = 1; i < lines.length; i++) {
+      const row = lines[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+      if (!row || row.length < 5) continue;
+      const [name, phase, role, core, clusters] = row.map(cell => cell.replace(/(^"|"$)/g, ""));
+      newSkills.push({
+        name, phase, role, core,
+        skillCluster: clusters.split(";").map(k => k.trim()).filter(Boolean)
+      });
+    }
+
+    if (!confirm(`⚠️ Ghi đè toàn bộ ${skillData.length} kỹ năng hiện tại?`)) return;
+
+    skillData = newSkills;
+    saveSkills();
+    renderSkills();
+    buildClusterDashboard();
+    renderAllCharts();
+    populateAdvancedFilters();
+    alert("✔️ Đã nhập dữ liệu từ CSV.");
+  };
+
+  reader.readAsText(file);
+}
+
+document.getElementById("personaSelector").addEventListener("change", function () {
+  const selectedPersona = this.value;
+  const container = document.getElementById("personaSkillCards");
+  container.innerHTML = "";
+
+  if (!selectedPersona) return;
+
+  const matchedSkills = skillData.filter(skill =>
+    skill.personaMain === selectedPersona || skill.personaSupport === selectedPersona
+  );
+
+  if (matchedSkills.length === 0) {
+    container.innerHTML = `<p>Không tìm thấy kỹ năng cho persona này.</p>`;
+    return;
+  }
+
+  matchedSkills.forEach(skill => {
+    const flowSteps = (skill.flow || []).map((f, i) => `<li><strong>B${i + 1}:</strong> ${f}</li>`).join("");
+    const div = document.createElement("div");
+    div.className = "skill-card";
+    div.innerHTML = `
+      <h3>🎯 ${skill.name}</h3>
+      <p><strong>Flow:</strong></p>
+      <ul>${flowSteps}</ul>
+      <p><strong>Chiến thuật:</strong> ${skill.core || "Không có ghi chú chiến lược."}</p>
+    `;
+    container.appendChild(div);
+  });
+});
+
+const select = document.getElementById('personaSelector'); // đúng id bạn đang dùng
+
+if (select) {
+  // Render danh sách
+  Object.keys(personaData).forEach(p => {
+    const option = document.createElement('option');
+    option.value = p;
+    option.textContent = p;
+    select.appendChild(option);
+  });
+
+  // Gắn event
+  select.addEventListener('change', () => {
+    const persona = personaData[select.value];
+    if (!persona) return;
+
+    // 👉 Thay vì console.log, render ra UI
+    console.log("Survival:", persona.survival.trigger, persona.survival.flow);
+    console.log("Coordination:", persona.coordination.flow);
+    console.log("Strategic:", persona.strategic.flow);
+  });
+}
+
+// ----- CHART ENLARGE -------------------------------------------------
+const chartOrigins = {};
+
+function enlargeChart(id) {
+  const canvas = document.getElementById(id);
+  const overlay = document.getElementById('chartOverlay');
+  if (!canvas || !overlay) return;
+
+  if (!chartOrigins[id]) {
+    chartOrigins[id] = canvas.parentElement;
+  }
+
+  overlay.innerHTML = '';
+  const close = document.createElement('button');
+  close.textContent = '✖';
+  close.onclick = () => {
+    overlay.classList.add('hidden');
+    chartOrigins[id].prepend(canvas);
+  };
+  overlay.appendChild(close);
+  overlay.appendChild(canvas);
+  overlay.classList.remove('hidden');
+}
+
+</script>
+
+  <!-- ===== Persona Skill Manager (React) ===== -->
+  <section>
+    <h2>🧠 Persona Skill Manager</h2>
+    <div id="personaSkillApp"></div>
+  </section>
+
+</body>
+
+<!-- React & Babel CDNs -->
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<!-- Inline Persona JSON (normalized at runtime) -->
+<script type="application/json" id="persona_full_data_v2">
+[
+  {
+    "persona": "Sirene",
+    "reflexes": {
+      "survival": {
+        "trigger": "Khi bị quan sát / đánh giá / cần phản đòn mềm",
+        "flow": [
+          "Giữ trục tỉnh → không nhìn đối phương ngay",
+          "Thả tín hiệu nhẹ (khí – giọng – ánh mắt không đối đầu)",
+          "Lặng rút – kết lại bằng khoảng trống"
+        ],
+        "skills": [
+          "Lướt qua không để lại dấu",
+          "Bật khí lạnh",
+          "Rút lui có chủ đích"
+        ]
+      },
+      "coordination": {
+        "trigger": "Khi cần giữ khí chủ – không để cảm xúc đẩy lệch",
+        "flow": [
+          "Điều hòa nhịp thở – chỉnh tư thế",
+          "Kéo giọng xuống thấp – giảm tiết lộ",
+          "Nhìn chệch – phản xạ mềm, để người khác tự ngắt"
+        ],
+        "skills": [
+          "Điều khí nền",
+          "Giữ nhiệt độ sống",
+          "Neo ánh mắt chệch hướng"
+        ]
+      },
+      "strategic": {
+        "trigger": "Khi muốn điều hướng người khác mà không bị phát hiện",
+        "flow": [
+          "Đặt tín hiệu đầu tiên (giọng, khí, ánh mắt)",
+          "Dẫn cảm xúc đối phương chạy theo",
+          "Rút về giữa chừng – không đóng tròn → tạo nhu cầu tiếp cận"
+        ],
+        "skills": [
+          "Neo cảm xúc tầng thấp",
+          "Đặt giọng dẫn nhịp",
+          "Tạo cảnh chưa kết"
+        ]
+      }
+    }
+  },
+  {
+    "persona": "Strategic Shadow",
+    "reflexes": {
+      "survival": {
+        "trigger": "Khi cần biến mất khỏi radar cảm xúc – tránh đối đầu / không để bị định danh",
+        "flow": [
+          "Tắt năng lượng hiển thị",
+          "Giảm phản ứng – thu tần số giọng",
+          "Cắt mắt khỏi trung tâm không gian"
+        ],
+        "skills": [
+          "Tắt khí tầng hiển",
+          "Rút khỏi vùng radar",
+          "Giảm tần sóng não ngoài"
+        ]
+      },
+      "coordination": {
+        "trigger": "Khi đang vận hành phân tích trong nền – cần tránh rối não / xung đột",
+        "flow": [
+          "Bật chế độ phân tích thầm",
+          "Ghi lại các sai số vi mô",
+          "Neo trạng thái lạnh, không phản xạ"
+        ],
+        "skills": [
+          "Quét sai số tầng ngầm",
+          "Neo phân tích nền",
+          "Giữ trạng thái không ảnh"
+        ]
+      },
+      "strategic": {
+        "trigger": "Khi muốn thay đổi cấu trúc hệ thống mà không tạo phản kháng",
+        "flow": [
+          "Cấy tín hiệu lỗi nhỏ vào hành vi người khác",
+          "Quan sát phản xạ – ghi dữ liệu",
+          "Tái lập cấu trúc ngầm dựa trên nhịp lệch"
+        ],
+        "skills": [
+          "Cấy lệch cảm xúc",
+          "Dựng vòng phản xạ ngược",
+          "Điều hướng bằng lỗi ẩn"
+        ]
+      }
+    }
+  },
+  {
+    "persona": "Void Jester",
+    "reflexes": {
+      "survival": {
+        "trigger": "Khi bị áp lực thao túng – cần phá vòng xoáy cảm xúc",
+        "flow": [
+          "Cười lệch – châm biếm tình huống",
+          "Đặt câu hỏi ngược – làm lộ khe hở hệ thống",
+          "Chặn logic bằng phản đề"
+        ],
+        "skills": [
+          "Phản đề cười lạnh",
+          "Bóc mặt nạ logic",
+          "Gài đối thoại gãy sóng"
+        ]
+      },
+      "coordination": {
+        "trigger": "Khi phát hiện hệ thống ngầm đang thao túng tâm lý / ép vai",
+        "flow": [
+          "Đổi giọng – làm lệch nhịp giao tiếp",
+          "Tạo cảm giác bất ổn cho đối phương",
+          "Ép hệ thống tự lòi bug"
+        ],
+        "skills": [
+          "Đảo tầng biểu cảm",
+          "Tạo sóng lệch",
+          "Làm nhiễu logic xã hội"
+        ]
+      },
+      "strategic": {
+        "trigger": "Khi cần phá vỡ cấu trúc quyền lực ảo – làm hệ thống sụp đổ từ trong",
+        "flow": [
+          "Dẫn dụ vào logic sai của chính đối phương",
+          "Châm biếm – bóp méo – ép hệ tự mâu thuẫn",
+          "Kết thúc bằng đòn phản đề trúng huyệt"
+        ],
+        "skills": [
+          "Gương phản logic",
+          "Đòn đảo tầng xã hội",
+          "Hủy diệt bằng ngôn từ"
+        ]
+      }
+    }
+  },
+  {
+    "name": "Strategic Ghost",
+    "reflexes": {
+      "survival": {
+        "trigger": "Khi bị đặt vào thế phải tồn tại trong hệ mà không được tin tưởng",
+        "flow": [
+          "Giả thuận – mềm hóa biểu cảm",
+          "Ghi nhớ vị trí quyền lực / các nút chuyển hệ",
+          "Neo vào cấu trúc bị bỏ trống"
+        ],
+        "skills": [
+          "Ngụy ổn định",
+          "Quét nút logic",
+          "Chiếm slot tâm lý mềm"
+        ]
+      },
+      "coordination": {
+        "trigger": "Khi cần dẫn dắt hệ thống mà không được cấp vai chính thức",
+        "flow": [
+          "Gợi ý qua mặt nạ vai phụ",
+          "Bẻ hướng từ hậu cảnh (qua các nút cảm xúc hoặc hệ niềm tin)",
+          "Neo định hướng ngầm qua thói quen hệ thống"
+        ],
+        "skills": [
+          "Gợi hướng ẩn",
+          "Bẻ trục niềm tin",
+          "Neo phản xạ nền"
+        ]
+      },
+      "tactical": {
+        "trigger": "Khi muốn cấy lại toàn bộ hệ thống mà không lộ là người thao túng",
+        "flow": [
+          "Phân tích chuỗi logic vỡ hoặc rỗng",
+          "Xây hệ thống ngầm dự phòng",
+          "Dẫn hệ thống chuyển trục mà tưởng là tự nhiên"
+        ],
+        "skills": [
+          "Cấy phản xạ nền",
+          "Xây bóng hệ thống",
+          "Chuyển trục không dấu vết"
+        ]
+      }
+    }
+  },
+  {
+    "name": "Omni Mind",
+    "reflexes": {
+      "survival": {
+        "trigger": "Khi thế trận rối – không rõ hướng – không biết giữ hệ ở đâu",
+        "flow": [
+          "Lập bản đồ yếu tố tồn tại",
+          "Khoanh vùng điểm neo",
+          "Dựng trục tạm thời để ổn định"
+        ],
+        "skills": [
+          "Dựng hệ khí khẩn cấp",
+          "Trục sống giả lập",
+          "Cân bằng bất ổn"
+        ]
+      },
+      "coordination": {
+        "trigger": "Khi có quá nhiều lựa chọn / mâu thuẫn tầng cao",
+        "flow": [
+          "Cắt mù logic – dựng sơ đồ nhân quả",
+          "Xác định trọng tâm hệ sống",
+          "Chọn hướng dựa trên tổng hệ phản xạ"
+        ],
+        "skills": [
+          "Sơ đồ nhân quả",
+          "Trục ưu tiên",
+          "Điểm hoá giải tầng sâu"
+        ]
+      },
+      "tactical": {
+        "trigger": "Khi cần thiết lập long-term chiến lược mà không bị bias cảm xúc",
+        "flow": [
+          "Mô phỏng chuỗi 3–5 bước tới",
+          "Phân tích feedback từng hệ",
+          "Chốt trục chiến lược và lùi về tầng điều phối"
+        ],
+        "skills": [
+          "Giả lập tương lai",
+          "Phản xạ hệ chéo",
+          "Thiết lập trục định mệnh"
+        ]
+      }
+    }
+  },
+  {
+    "name": "Dark Sirene",
+    "reflexes": {
+      "survival": {
+        "trigger": "Khi hệ đang bị kiểm soát – cần phản công mềm để lật thế",
+        "flow": [
+          "Kích hoạt aura độc lập – tách năng lượng",
+          "Dẫn khí vào khu vực phản xạ đối phương (ánh mắt – giọng nói – ngôn ngữ hình thể)",
+          "Gài lệch cảm xúc – rút lùi giữ trục"
+        ],
+        "skills": [
+          "Tách tầng cảm giác",
+          "Khí cảm phản đòn",
+          "Gài lệch – đóng van"
+        ]
+      },
+      "coordination": {
+        "trigger": "Khi cần điều chỉnh dòng cảm xúc bên ngoài nhưng vẫn giữ kiểm soát",
+        "flow": [
+          "Xác định điểm yếu cảm xúc đối phương",
+          "Gài điểm gợi cảm – dẫn dụ soft response",
+          "Neo lại bằng logic – cắt mềm liên kết cảm xúc"
+        ],
+        "skills": [
+          "Định vị cảm xúc yếu",
+          "Neo gợi – dẫn dụ",
+          "Cắt cảm xúc đúng nhịp"
+        ]
+      },
+      "tactical": {
+        "trigger": "Khi cần kích hoạt nhu cầu – định hình hệ thống đối phương theo chiến lược",
+        "flow": [
+          "Thiết lập hình ảnh – khí – giọng làm mồi chủ lực",
+          "Đưa hành vi vào vùng “gợi cảm xúc + phản ứng” của đối phương",
+          "Lật logic – tạo định nghĩa mới về bản thân trong não đối phương"
+        ],
+        "skills": [
+          "Thiết lập avatar khí",
+          "Cấy phản xạ mềm",
+          "Thay đổi định nghĩa đối tượng"
+        ]
+      }
+    }
+  },
+  {
+    "name": "Core Operator",
+    "reflexes": {
+      "survival": {
+        "trigger": "Khi hệ sinh học lệch – rối loạn nhịp sống – cần tự cứu",
+        "flow": [
+          "Dò lệch (sinh học – thần kinh – khí)",
+          "Kích hoạt chuỗi “cứu hệ”: nghỉ – hồi phục – dưỡng sinh",
+          "Ghi log – khóa phản xạ lặp"
+        ],
+        "skills": [
+          "Phát hiện lệch sống",
+          "Kích hoạt bản năng bảo trì",
+          "Khóa lặp phản tổn"
+        ]
+      },
+      "coordination": {
+        "trigger": "Khi có nhiều dòng hành vi trùng – xung – hoặc mâu thuẫn cần tái tổ hợp",
+        "flow": [
+          "Lọc chuỗi hành vi – phát hiện trùng/đối kháng",
+          "Ưu tiên theo khí – mục tiêu – chu kỳ năng lượng",
+          "Tái thiết hành vi – cập nhật định nghĩa sống"
+        ],
+        "skills": [
+          "Tái tổ hợp dòng hành vi",
+          "Lập thứ tự ưu tiên sống",
+          "Cập nhật phản xạ theo chu kỳ năng lượng"
+        ]
+      },
+      "tactical": {
+        "trigger": "Khi cần tạo mẫu chiến lược cá nhân hóa cho giai đoạn sống tiếp theo",
+        "flow": [
+          "Tổng hợp dữ liệu hành vi – khí – tình huống",
+          "Tái mã hóa định mệnh cá nhân (Destiny Re-Coding)",
+          "Lập chuỗi phản xạ mục tiêu – chiến thuật hóa vòng đời"
+        ],
+        "skills": [
+          "Ghi dữ liệu hành vi sống",
+          "Tái mã hóa định mệnh",
+          "Chiến thuật hóa vòng sống cá nhân"
+        ]
+      }
+    }
+  }
+]
+
+</script>
+
+<!-- JSX App -->
+<script type="text/babel">
+const RawPersona = JSON.parse(document.getElementById('persona_full_data_v2').textContent);
+
+// Normalize: ensure .name exists; allow keys 'strategic' or 'tactical'
+const Personas = RawPersona.map(p => ({
+  name: p.name || p.persona || "Unknown",
+  reflexes: p.reflexes || { }
+}));
+
+function getPhases(obj) { return Object.keys(obj || {}); }
+
+function PersonaSkillManager() { 
+  const [index, setIndex] = React.useState(0);
+  const persona = Personas[index] || { name: "(N/A)", reflexes: {} };
+  const phases = getPhases(persona.reflexes);
+  const [tab, setTab] = React.useState(phases[0] || "");
+  const [kw, setKw] = React.useState("");
+
+  React.useEffect(() => { if (!phases.includes(tab)) setTab(phases[0] || ""); }, [index]);
+
+  const block = persona.reflexes[tab] || {};
+  const skills = (block.skills || []).filter(s => kw ? s.toLowerCase().includes(kw.toLowerCase()) : true);
+
+  return (
+    <div style={{border:'1px solid #ddd', padding:'12px', borderRadius:'12px'}}>
+      <div style={{display:'flex', gap:'8px', alignItems:'center', marginBottom:'12px', flexWrap:'wrap'}}>
+        <strong>Persona:</strong>
+        <select value={index} onChange={e => setIndex(parseInt(e.target.value))}>
+          {Personas.map((p, i) => <option key={p.name+"_"+i} value={i}>{p.name}</option>)}
+        </select>
+        <span style={{marginLeft:'16px'}}><strong>Phase:</strong></span>
+        <div style={{display:'flex', gap:'6px', flexWrap:'wrap'}}>
+          {phases.length ? phases.map(ph => (
+            <button key={ph} onClick={() => setTab(ph)}
+              style={{padding:'6px 10px', borderRadius:'8px', border: tab===ph?'2px solid #111':'1px solid #ccc', background:'#fff', cursor:'pointer'}}>
+              {ph}
+            </button>
+          )) : <em>(No phases)</em>}
+        </div>
+      </div>
+
+      <div style={{marginBottom:'12px'}}>
+        <div style={{fontWeight:600, marginBottom:'6px'}}>Trigger</div>
+        <div>{block.trigger || "(Không có dữ liệu)"}</div>
+      </div>
+
+      <div style={{marginBottom:'12px'}}>
+        <div style={{fontWeight:600, marginBottom:'6px'}}>Flow</div>
+        <ul style={{margin:'0 0 0 18px'}}>
+          {(block.flow || []).map((f, i) => <li key={i}>{f}</li>)}
+          {(!block.flow || !block.flow.length) && <li>(Không có dữ liệu)</li>}
+        </ul>
+      </div>
+
+      <div style={{marginBottom:'8px'}}>
+        <input placeholder="🔍 Tìm kỹ năng..." value={kw} onChange={e=>setKw(e.target.value)}
+               style={{padding:'8px', width:'100%', maxWidth:'360px'}}/>
+      </div>
+
+      <div style={{display:'flex', gap:'6px', flexWrap:'wrap'}}>
+        {skills.length ? skills.map((s,i) => (
+          <span key={i} style={{border:'1px solid #bbb', borderRadius:'999px', padding:'4px 10px', fontSize:'13px'}}>{s}</span>
+        )) : <em>(Không có kỹ năng)</em>}
+      </div>
+    </div>
+  );
+}
+
+// Mount
+const mount = document.getElementById('personaSkillApp');
+if (mount) ReactDOM.createRoot(mount).render(<PersonaSkillManager />);
+</script>
+
+</html>
